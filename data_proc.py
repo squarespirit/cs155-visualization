@@ -13,3 +13,13 @@ def ratings_for_movies(Y):
     for user_id, movie_id, rating in Y:
         ratings[movie_id].append(rating)
     return ratings
+
+
+def top_indices(lst, num_indices):
+    """
+    :return: Indices of the top 'num_indices' elements in list, sorted by
+        largest element first.
+    """
+    return sorted(
+        range(len(lst)), key=lambda i: lst[i], reverse=True
+    )[:num_indices]
