@@ -2,7 +2,7 @@
 
 NUM_MOVIES = 1682
 # GENRE_NAMES[i] is the name of genre i
-GENRE_NAMES = 'Action, Adventure, Animation, Childrens, Comedy, Crime, Documentary, Drama, Fantasy, Film-Noir, Horror, Musical, Mystery, Romance, Sci-Fi, Thriller, War, Western'.split(', ')
+GENRE_NAMES = 'Unknown, Action, Adventure, Animation, Childrens, Comedy, Crime, Documentary, Drama, Fantasy, Film-Noir, Horror, Musical, Mystery, Romance, Sci-Fi, Thriller, War, Western'.split(', ')
 
 
 def ratings_for_movies(Y):
