@@ -6,9 +6,11 @@ from collections import Counter
 import seaborn as sns
 
 
-def all_ratings(Y):
-    """Plot histogram of all ratings.
-    :param Y: List of (user, movie, rating) lists.
+def bar_count_ratings(Y, plot_title):
+    """Plot bar chart of counts of each rating.
+    You have to call plt.show() afterward.
+    :param Y: List of (user, movie, rating) triples.
+    :param plot_title
     """
     # Ratings
     ratings = [rating_list[2] for rating_list in Y]
@@ -19,11 +21,18 @@ def all_ratings(Y):
     # count_ratings[i] is the number of ratings with value rating_values[i]
     count_ratings = [ratings.count(value) for value in rating_values]
 
-    plt.bar(rating_values, count_ratings, align='center')
-    plt.xticks(rating_values)  # I'm not sure why this works
+    plt.bar(rating_values, count_ratings, align='center',
+            tick_label=rating_values)
     plt.ylabel('Count')
     plt.xlabel('Rating')
-    plt.title('Histogram of all ratings')
+    plt.title(plot_title)
+
+
+def all_ratings(Y):
+    """Plot histogram of all ratings.
+    :param Y: List of (user, movie, rating) lists.
+    """
+    bar_count_ratings(Y, 'Rating distribution for all movies')
     plt.show()
 
 
@@ -94,12 +103,36 @@ def ratings_best(Y, titles):
     plt.show()
 
 
+def ratings_genre(Y, genres, genre_id):
+    """Plot rating distribution for all movies of the given genre."""
+    # Filter Y for only ratings of movies in the genre.
+    genre_Y = filter(
+        lambda user_movie_rating: genres[user_movie_rating[1]][genre_id], Y
+    )
+    bar_count_ratings(genre_Y, 'Rating distribution for {} movies'.format(
+        data_proc.GENRE_NAMES[genre_id]
+    ))
+
+
+def ratings_genres(Y, genres):
+    """Plot rating distribution for 3 genres."""
+    plt.subplot(311)
+    ratings_genre(Y, genres, 1)
+    plt.subplot(312)
+    ratings_genre(Y, genres, 2)
+    plt.subplot(313)
+    ratings_genre(Y, genres, 3)
+    plt.tight_layout()
+    plt.show()
+
+
 def main():
     Y = data_readers.read_data()
     titles, genres = data_readers.read_movies()
     # all_ratings(Y)
     # ratings_most_popular(Y, titles)
-    ratings_best(Y, titles)
+    # ratings_best(Y, titles)
+    ratings_genres(Y, genres)
 
 
 main()
