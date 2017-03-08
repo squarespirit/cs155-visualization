@@ -1,4 +1,6 @@
 # For stuff that reads data from files in data/
+# Put additional data processing logic in data_proc.py--I think this is a
+# good organization, let me know
 
 import io
 
