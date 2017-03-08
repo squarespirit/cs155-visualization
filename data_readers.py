@@ -36,10 +36,14 @@ def read_movies(filename='data/movies.txt'):
     titles = []
     genres = []
 
-    with io.open(filename, 'r', encoding='utf8') as f:
+    with io.open(filename, 'r', encoding='ISO-8859-1') as f:
         for line in f:
             strings = line.strip().split('\t')
-            titles.append(strings[1])
+
+            # Strip " around title, if they are there
+            title = strings[1]
+            titles.append(title.strip('"'))
+
             genres.append(
                 [int(genre_str) for genre_str in strings[2:]]
             )
@@ -47,4 +51,4 @@ def read_movies(filename='data/movies.txt'):
     return titles, genres
 
 
-print read_movies()
+# print read_movies()
