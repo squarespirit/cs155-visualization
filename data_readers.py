@@ -51,6 +51,3 @@ def read_movies(filename='data/movies.txt'):
             )
 
     return titles, genres
-
-
-# print read_movies()
