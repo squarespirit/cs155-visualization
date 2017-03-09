@@ -3,6 +3,8 @@
 # good organization, let me know
 
 import io
+import csv
+import numpy as np
 
 
 def read_data(filename='data/data.txt'):
@@ -26,6 +28,21 @@ def read_data(filename='data/data.txt'):
             Y.append(rating)
 
     return Y
+
+def read_file_to_np_array(file_path):
+    '''
+    Does the same thing as the function above but returns it as
+    a matrix. I suck. I know.
+    :return: data_array: a matrix of (user, movie, rating) tuples
+    '''
+    # Parse csv and convert to array
+    with io.open(file_path, 'r', encoding='utf8') as dest_f:
+        data_iter = csv.reader(dest_f, delimiter='\t', quotechar='"')
+        data = [data for data in data_iter]
+
+    data_array = np.asarray(data, dtype=int)
+
+    return data_array
 
 
 def read_movies(filename='data/movies.txt'):
