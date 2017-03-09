@@ -135,4 +135,5 @@ def main():
     ratings_genres(Y, genres)
 
 
-main()
+if __name__ == '__main__':
+    main()
