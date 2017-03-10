@@ -1,6 +1,7 @@
 import data_readers, data_proc
 import prob2utils as off_da_shelf
 import numpy as np
+import matplotlib.pyplot as plt
 
 def project(A, num_cols, U, V):
     if len(A) == 0:
@@ -12,9 +13,9 @@ def project(A, num_cols, U, V):
     A_proj = A[:, 0:num_cols]
     
     new_V = np.matmul(A_proj.transpose(), V)
-    new_U = np.matmul(A_proj.transpose(), U)
+    # new_U = np.matmul(A_proj.transpose())
 
-    return new_U, new_V
+    return new_V
 
 
 def main():
@@ -39,7 +40,7 @@ def main():
     U = np.random.uniform(low=-0.5, high=0.5, size=(K, M))
     V = np.random.uniform(low=-0.5, high=0.5, size=(K, N))
 
-    # U, V, err = off_da_shelf.train_model(M, N, K, eta, reg, Y)
+    U, V, err = off_da_shelf.train_model(M, N, K, eta, reg, Y)
     # print U
     # print V
 
@@ -47,10 +48,31 @@ def main():
     # print A
     # print A.shape
 
-    nU, nV = project(A, 2, U, V)
+    nV = project(A, 2, U, V)
 
-    print nV
-    print nV.shape
+    # print nU
+    # print nU.shape
+    #print nV
+    #print nV.shape
+    visualize(nV, titles)
+
+def visualize(nV, titles):
+    idxs = np.random.choice(nV.shape[1], size=10, replace=False)
+    #X, Y, tits = nV[0, idxs], nV[1, idxs], titles[idxs]
+    fig = plt.figure()
+    sub = fig.add_subplot('111')
+    #plt.plot(X, Y, 'o')
+    #xy = zip(X,Y)
+    for i in idxs:
+        plt.plot(nV[0, i], nV[1, i], "o")
+        sub.annotate('%s' % titles[i], xy=(nV[0,i], nV[1,i]), xytext=(40, 20),
+        textcoords='offset points', ha='right', va='bottom',
+        bbox=dict(boxstyle='round,pad=0.5', fc='purple', alpha=0.5))
+    sub.spines['left'].set_position('zero')
+    sub.spines['right'].set_color('none')
+    sub.spines['bottom'].set_position('zero')
+    sub.spines['top'].set_color('none')
+    plt.show()
 
 
 
