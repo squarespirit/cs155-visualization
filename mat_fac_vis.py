@@ -2,7 +2,9 @@ import data_readers, data_proc
 import prob2utils as off_da_shelf
 import numpy as np
 import matplotlib.pyplot as plt
+
 from collections import Counter
+from numpy.linalg import norm
 
 def project(A, num_cols, U, V):
     if len(A) == 0:
@@ -43,6 +45,14 @@ def main():
 
     U, V, err = off_da_shelf.train_model(M, N, K, eta, reg, Y)
     # print U
+    # print V
+
+
+    # nrm = norm(V, axis=1, ord=1)
+    for i in range(len(V)):
+        V[i] = V[i] - (sum(V[i]) / len(V[i]))
+    
+
     # print V
 
     A, sig, B = np.linalg.svd(V)
