@@ -33,7 +33,7 @@ def main():
 
     N = int(max(movies) - min(movies) + 1) 
 
-    print M, N
+    #print M, N
 
     K = 20
     eta = 0.03
@@ -43,7 +43,7 @@ def main():
     U = np.random.uniform(low=-0.5, high=0.5, size=(K, M))
     V = np.random.uniform(low=-0.5, high=0.5, size=(K, N))
 
-    U, V, err = off_da_shelf.train_model(M, N, K, eta, reg, Y)
+    #U, V, err = off_da_shelf.train_model(M, N, K, eta, reg, Y)
     # print U
     # print V
 
@@ -68,13 +68,37 @@ def main():
 
     # 10 random movie ids
     rng_idxs = np.random.choice(nV.shape[1], size=10, replace=False)
-    #visualize(nV, titles, rng_idxs)
+    visualize(nV, titles, rng_idxs)
 
     # 10 most popular movie ids
-    result = Counter([rating_list[1]-1 for rating_list in Y]).most_common(10)
-    popular_idxs = [elt_and_count[0] for elt_and_count in result]
+    popular_idxs = [e[0] for e in Counter([r[1]-1 for r in Y]).most_common(10)]
     visualize(nV, titles, popular_idxs)
 
+    # 10 best rated movie ids
+    Y[:, 1] -= 1
+    ratings_lists = data_proc.ratings_for_movies(Y)
+    avg_ratings = [float(sum(ratings_list) + sum(list(range(1, 6))))
+                   / (len(ratings_list) + len(list(range(1, 6))))
+                   for ratings_list in ratings_lists]
+    best_idxs = data_proc.top_indices(avg_ratings, 10)
+    visualize(nV, titles, best_idxs)
+
+    # 10 genre 1 movie ids
+    genre_idxs = [movies[i] for i in range(len(titles)) if np.asarray(genres)[i, 1] == 1]
+    genre_idxs = np.random.choice(genre_idxs, size=10, replace=False)
+    visualize(nV, titles, genre_idxs)
+
+    # 10 genre 2 movie ids
+    genre_idxs = [movies[i] for i in range(len(titles)) if np.asarray(genres)[i, 2] == 1]
+    genre_idxs = np.random.choice(genre_idxs, size=10, replace=False)
+    visualize(nV, titles, genre_idxs)
+    
+    # 10 genre 3 movie ids
+    genre_idxs = [movies[i] for i in range(len(titles)) if np.asarray(genres)[i, 3] == 1]
+    genre_idxs = np.random.choice(genre_idxs, size=10, replace=False)
+    visualize(nV, titles, genre_idxs)
+
+    plt.show()
 
 def visualize(nV, titles, idxs):
     fig = plt.figure()
@@ -91,7 +115,7 @@ def visualize(nV, titles, idxs):
     sub.spines['bottom'].set_position('zero')
     sub.spines['top'].set_color('none')
     
-    plt.show()
+    #plt.show()
 
 
 
