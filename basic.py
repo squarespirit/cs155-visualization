@@ -129,9 +129,9 @@ def ratings_genres(Y, genres):
 def main():
     Y = data_readers.read_data()
     titles, genres = data_readers.read_movies()
-    # all_ratings(Y)
-    # ratings_most_popular(Y, titles)
-    # ratings_best(Y, titles)
+    all_ratings(Y)
+    ratings_most_popular(Y, titles)
+    ratings_best(Y, titles)
     ratings_genres(Y, genres)
 
 
