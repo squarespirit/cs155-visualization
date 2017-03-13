@@ -60,17 +60,17 @@ def main():
     visualize(nV, titles, best_idxs, plt_title="visualization of 10 best rated movies")
 
     # 10 genre 1 movie ids
-    genre_idxs = [movies[i] for i in range(len(titles)) if np.asarray(genres)[i, 1] == 1]
+    genre_idxs = [i for i in range(len(genres)) if genres[i][1] == 1]
     genre_idxs = np.random.choice(genre_idxs, size=10, replace=False)
     visualize(nV, titles, genre_idxs, plt_title="visualization of 10 action movies")
 
     # 10 genre 2 movie ids
-    genre_idxs = [movies[i] for i in range(len(titles)) if np.asarray(genres)[i, 2] == 1]
+    genre_idxs = [i for i in range(len(genres)) if genres[i][2] == 1]
     genre_idxs = np.random.choice(genre_idxs, size=10, replace=False)
     visualize(nV, titles, genre_idxs, plt_title="visualization of 10 adventure movies")
     
     # 10 genre 3 movie ids
-    genre_idxs = [movies[i] for i in range(len(titles)) if np.asarray(genres)[i, 3] == 1]
+    genre_idxs = [i for i in range(len(genres)) if genres[i][3] == 1]
     genre_idxs = np.random.choice(genre_idxs, size=10, replace=False)
     visualize(nV, titles, genre_idxs, plt_title="visualization of 10 animation movies")
 
